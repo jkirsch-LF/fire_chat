@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { getRoomData, getChatLog, sendNewMessage } from '../actions';
 import { db } from '../firebase';
 
@@ -16,7 +17,7 @@ class ChatRoom extends React.Component {
 
         this.props.getRoomData(roomId);
 
-       db,ref(`/chat-logs/${logId}`).on('value', snapshot =>{
+       db.ref(`/chat-logs/${logId}`).on('value', snapshot =>{
            this.props.getChatLog(snapshot.val());
        })
     }
@@ -45,6 +46,7 @@ class ChatRoom extends React.Component {
 
         return (
             <div>
+                <Link to='/' className="btn red">Go Back to Lobby</Link>
                 <h3>{name ? name : 'Loading'}</h3>
                 <form onSubmit={this.sendMessage.bind(this)}>
                     <label>Enter Message:</label>
